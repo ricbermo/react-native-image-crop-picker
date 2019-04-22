@@ -850,11 +850,10 @@ RCT_EXPORT_METHOD(openCropper:(NSDictionary *)options
 
 #pragma mark - CropFinishDelegate
 
-// Crop image has been canceled.
 - (void)imageCropViewControllerDidCancelCrop:
 (RSKImageCropViewController *)controller {
     [self dismissCropper:controller selectionDone:NO completion:[self waitAnimationEnd:^{
-        if (self.currentSelectionMode == CROPPING || [[self.options objectForKey:@"cropping"] boolValue]) {
+        if (self.currentSelectionMode != PICKER && (self.currentSelectionMode == CROPPING || [[self.options objectForKey:@"cropping"] boolValue])) {
             self.reject(ERROR_PICKER_CANCEL_KEY, ERROR_PICKER_CANCEL_MSG, nil);
         }
     }]];
